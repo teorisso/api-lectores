@@ -1,61 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Lectores
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una API RESTful construida con **Laravel 12** para gestionar la entidad **Lector**, cumpliendo con un Trabajo Práctico (TP) que incluye operaciones CRUD (Crear, Leer, Actualizar y Eliminar).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP >= 8.3
+- Composer
+- MySQL (instalado y corriendo, por ejemplo con XAMPP/LAMPP)
+- Extensiones de PHP activas: `pdo_mysql`, `xml`, `mysql`, `fileinfo`
+- Postman (u otra herramienta similar) para pruebas de API
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Instalación y configuración
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/teorisso/api-lectores.git
+   cd api-lectores
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Instalar dependencias con Composer**
+   ```bash
+   composer install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Configurar variables de entorno**
+    - Copiar el archivo de ejemplo:
+      ```bash
+      cp .env.example .env
+      ```
+    - Editar `.env` y ajustar la conexión a la base de datos:
+      ```ini
+      DB_CONNECTION=mysql
+      DB_HOST=127.0.0.1
+      DB_PORT=3306
+      DB_DATABASE=api_lectores
+      DB_USERNAME=root
+      DB_PASSWORD=
+      ```
 
-## Laravel Sponsors
+4. **Generar la clave de la aplicación**
+   ```bash
+   php artisan key:generate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. **Ejecutar migraciones**
+   ```bash
+   php artisan migrate:fresh
+   ```
 
-### Premium Partners
+6. **Iniciar servidor de desarrollo**
+   ```bash
+   php artisan serve
+   ```
+   La API estará disponible en `http://127.0.0.1:8000`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🚀 Endpoints disponibles
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Método    | Ruta                        | Descripción                      |
+|-----------|-----------------------------|----------------------------------|
+| GET       | `/api/lectores`             | Listar todos los lectores        |
+| POST      | `/api/lectores`             | Crear un nuevo lector            |
+| GET       | `/api/lectores/{id}`        | Obtener un lector por su ID      |
+| PUT/PATCH | `/api/lectores/{id}`        | Actualizar un lector existente   |
+| DELETE    | `/api/lectores/{id}`        | Eliminar un lector               |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🧪 Pruebas con Postman
 
-## Security Vulnerabilities
+1. Configurar un **Environment** con variable:
+    - `base_url = http://127.0.0.1:8000/api`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **GET** `{{base_url}}/lectores` → `200 OK`, Body: `[]` (si no hay datos).
 
-## License
+3. **POST** `{{base_url}}/lectores` (JSON):
+   ```json
+   {
+     "nombre": "Ana",
+     "apellido": "Gómez",
+     "email": "ana@example.com",
+     "direccion": "Córdoba 123",
+     "telefono": "3511234567"
+   }
+   ```
+   → `201 Created`, devuelve el recurso.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **GET** `{{base_url}}/lectores/1` → `200 OK`, objeto JSON.
+
+5. **PUT** `{{base_url}}/lectores/1` (JSON parcial):
+   ```json
+   { "direccion": "Salta 456" }
+   ```
+   → `200 OK`, objeto actualizado.
+
+6. **DELETE** `{{base_url}}/lectores/1` → `204 No Content`.
+
+---
+
+## 📂 Estructura de carpetas
+
+- `app/Models/Lector.php` – Modelo Eloquent
+- `app/Http/Controllers/LectorController.php` – Controlador API
+- `app/Providers/RouteServiceProvider.php` – Mapea rutas de API y web
+- `routes/api.php` – Definición de rutas RESTful
+- `database/migrations/` – Migraciones de la tabla `lector`
+
+---
+
+## 📝 Notas adicionales
+
+- Validaciones de entrada se realizan con el método `validate()` de Laravel.
+- Se emplea `Route::apiResource()` para generar automáticamente todas las rutas.
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia MIT. Siéntete libre de usarlo y adaptarlo para tus necesidades.
+
